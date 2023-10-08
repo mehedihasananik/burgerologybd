@@ -16,7 +16,7 @@ export default {
         '2xl': '1536px',
       },
       fontFamily: {
-        'Mulish': ['Mulish', 'sans-serif'],
+        'Roboto': ['Roboto', 'sans-serif'],
       },
     },
   },
