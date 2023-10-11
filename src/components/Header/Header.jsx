@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Navbar,
   Typography,
@@ -7,8 +7,11 @@ import {
   Collapse,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const Header = () => {
+  const { user, logOut } = useContext(AuthContext);
+
   const [openNav, setOpenNav] = React.useState(false);
 
   React.useEffect(() => {
@@ -28,16 +31,14 @@ const Header = () => {
       >
         Home
       </Link>
-      <Typography
-        as="li"
+      <Link
+        to="/blogs"
         variant="small"
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
-          Blogs
-        </a>
-      </Typography>
+        Blogs
+      </Link>
       <Typography
         as="li"
         variant="small"
@@ -72,9 +73,16 @@ const Header = () => {
           Burgerology
         </Typography>
         <div className="hidden lg:block">{navList}</div>
-        <Button variant="gradient" size="sm" className="hidden lg:inline-block">
-          <span>Buy Now</span>
-        </Button>
+
+        <div>{user?.email}</div>
+        <div>
+          {" "}
+          {user ? (
+            <button onClick={logOut}>Logout</button>
+          ) : (
+            <Link to="/login">Login</Link>
+          )}
+        </div>
         <IconButton
           variant="text"
           className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"

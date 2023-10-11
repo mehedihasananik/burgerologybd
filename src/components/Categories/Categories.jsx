@@ -31,20 +31,33 @@ const Categories = () => {
     fetchFoods();
   }, []);
 
+  // filter by category
+  const categoryFilter = (id) => {
+    if (parseInt(id) === 0) {
+      setFilterFoods(foods);
+    } else {
+      const foodCategory = foods.filter((item) => item.category_id === id);
+      setFilterFoods(foodCategory);
+    }
+  };
+
   return (
     <div className="container mx-auto">
       <div className="flex justify-center gap-x-5 py-5">
         {categories.map((item) => {
           return (
             <div className="" key={item.id}>
-              <button className="uppercase font-bole text-xl">
+              <button
+                onClick={() => categoryFilter(item.id)}
+                className="uppercase font-bole text-xl"
+              >
                 {item.name}
               </button>
             </div>
           );
         })}
       </div>
-      <Foods filterFoods={filterFoods} />
+      <Foods foods={filterFoods} />
     </div>
   );
 };
