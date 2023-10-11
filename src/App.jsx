@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 
 import { Layout, Home } from "../src/components";
+import SingleCategory from "./components/SingleCategory/SingleCategory";
+import SingleFood from "./components/SingleFood/SingleFood";
 
 const router = createBrowserRouter([
   {
@@ -19,11 +21,20 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+        loader: () => fetch(`http://localhost:5000/foods`),
       },
-      // {
-      //   path: "/cart",
-      //   element: <Cart />,
-      // },
+      {
+        path: "/category/:id",
+        element: <SingleCategory />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/categories/${params.id}`),
+      },
+      {
+        path: "/foods/:id",
+        element: <SingleFood />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/foods/${params.id}`),
+      },
     ],
   },
 ]);
