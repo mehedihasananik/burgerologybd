@@ -9,10 +9,26 @@ import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import app from "../../../firebase.init";
 
+const auth = getAuth(app);
 const Login = () => {
   const { loginWithUser, user } = useContext(AuthContext);
   const [error, setError] = useState("");
+  const providerGoogle = new GoogleAuthProvider();
+
+  const handleLoginGoogle = () => {
+    signInWithPopup(auth, providerGoogle)
+      .then((result) => {
+        const user = result.user;
+
+        console.log(user);
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+  };
 
   let location = useLocation();
   let navigate = useNavigate();
@@ -71,6 +87,9 @@ const Login = () => {
           </Typography>
         </form>
       </Card>
+      <div>
+        <button onClick={handleLoginGoogle}>With Google</button>
+      </div>
     </div>
   );
 };
